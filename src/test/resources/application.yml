@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: peach-auth-service
+    module-code: ATH1
+  datasource:
+    url: jdbc:h2:mem:auth_service_test;MODE=PostgreSQL;DATABASE_TO_LOWER=true;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+peach:
+  auth:
+    issuer: http://127.0.0.1:8084
+    jwt-secret: test-jwt-secret-with-at-least-32-bytes
+    access-token-ttl-seconds: 7200
+    refresh-token-ttl-seconds: 604800
