@@ -1,29 +1,51 @@
 server:
   port: 8084
+  # 经网关按 /{serviceId}/** 访问且网关已传 X-Forwarded-Prefix 时，SpringDoc 才能生成带前缀的 swagger-config / v3/api-docs URL
+  forward-headers-strategy: framework
+  # 可选：注册到 Nacos 元数据 peach.service-description，网关 Swagger 门户「服务说明」列
+  service-description: 认证与权限
 
 spring:
   application:
     name: peach-auth-service
     module-code: AUTH
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:192.168.99.100:8848}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        ip: ${NACOS_REGISTER_IP:}
+        port: ${NACOS_REGISTER_PORT:${server.port}}
+        # 创作日期：2026-04-29，作者：leiyangjun — 本地调试时无 Nacos 不阻塞启动
+        fail-fast: false
   datasource:
     url: ${DB_URL:jdbc:postgresql://192.168.99.100:5432/peach_common?currentSchema=public}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
-    rw:
-      enabled: false
-      write:
-        url: ${DB_WRITE_URL:jdbc:postgresql://192.168.99.100:5432/peach_common?currentSchema=public}
-        username: ${DB_WRITE_USERNAME:postgres}
-        password: ${DB_WRITE_PASSWORD:postgres}
-        driver-class-name: org.postgresql.Driver
-      read:
-        url: ${DB_READ_URL:jdbc:postgresql://192.168.99.101:5432/peach_common?currentSchema=public}
-        username: ${DB_READ_USERNAME:postgres}
-        password: ${DB_READ_PASSWORD:postgres}
-        driver-class-name: org.postgresql.Driver
+#    rw:
+#      enabled: false
+#      write:
+#        url: ${DB_WRITE_URL:jdbc:postgresql://192.168.99.100:5432/peach_common?currentSchema=public}
+#        username: ${DB_WRITE_USERNAME:postgres}
+#        password: ${DB_WRITE_PASSWORD:postgres}
+#        driver-class-name: org.postgresql.Driver
+#      read:
+#        url: ${DB_READ_URL:jdbc:postgresql://192.168.99.101:5432/peach_common?currentSchema=public}
+#        username: ${DB_READ_USERNAME:postgres}
+#        password: ${DB_READ_PASSWORD:postgres}
+#        driver-class-name: org.postgresql.Driver
 
 peach:
+  doc:
+    portal-link:
+      # 下游文档追加「回到首页」链接，跳回网关门户页（由 peach-common-start 自动注入到 OpenAPI 描述）。
+      enabled: false
+      portal-url: ${PEACH_DOC_PORTAL_URL:http://127.0.0.1:8090/index.html}
+      link-text: 回到首页
   auth:
     issuer: ${PEACH_OAUTH2_ISSUER:http://127.0.0.1:8084}
     jwt-secret: ${PEACH_AUTH_JWT_SECRET:please-change-this-to-32-plus-bytes-secret}

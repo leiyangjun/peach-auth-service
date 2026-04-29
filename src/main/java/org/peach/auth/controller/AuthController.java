@@ -7,9 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.peach.auth.dto.ApiKeyLoginRequest;
 import org.peach.auth.dto.LoginTokenResponse;
 import org.peach.auth.dto.PasswordLoginRequest;
+import org.peach.auth.dto.SliderCaptchaChallengeResponse;
 import org.peach.auth.security.PeachApiKeyAuthenticator;
 import org.peach.auth.security.PeachPasswordLoginExtension;
 import org.peach.auth.service.PeachJwtTokenService;
+import org.peach.auth.service.SliderCaptchaService;
 import org.peach.common.mvc.result.ApiResult;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,13 +30,21 @@ public class AuthController {
 	private final PeachJwtTokenService peachJwtTokenService;
 	private final PeachPasswordLoginExtension peachPasswordLoginExtension;
 	private final PeachApiKeyAuthenticator peachApiKeyAuthenticator;
+	private final SliderCaptchaService sliderCaptchaService;
 
 	public AuthController(AuthenticationManager authenticationManager, PeachJwtTokenService peachJwtTokenService,
-			PeachPasswordLoginExtension peachPasswordLoginExtension, PeachApiKeyAuthenticator peachApiKeyAuthenticator) {
+			PeachPasswordLoginExtension peachPasswordLoginExtension, PeachApiKeyAuthenticator peachApiKeyAuthenticator,
+			SliderCaptchaService sliderCaptchaService) {
 		this.authenticationManager = authenticationManager;
 		this.peachJwtTokenService = peachJwtTokenService;
 		this.peachPasswordLoginExtension = peachPasswordLoginExtension;
 		this.peachApiKeyAuthenticator = peachApiKeyAuthenticator;
+		this.sliderCaptchaService = sliderCaptchaService;
+	}
+
+	@PostMapping("/slider/challenge")
+	public ApiResult<SliderCaptchaChallengeResponse> sliderChallenge() {
+		return ApiResult.ok(this.sliderCaptchaService.createChallenge());
 	}
 
 	@PostMapping("/password")
