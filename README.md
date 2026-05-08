@@ -6,8 +6,8 @@ Peach 体系中的**认证服务**：提供自定义登录 API（如用户名密
 
 - JDK 21
 - Spring Boot 4.0.x（与 `peach-dependencies` BOM 对齐）
-- Spring Security（`AuthenticationManager`、BCrypt）
-- `spring-security-oauth2-jose`：JWT 签发（HS256 共享密钥，与网关验签配置一致）
+- **jBCrypt**（`org.mindrot:jbcrypt`）：口令验密，与库内既有 BCrypt 摘要兼容；业务代码不依赖 `spring-boot-starter-security` / `AuthenticationManager`
+- **JJWT**（`io.jsonwebtoken:jjwt-*`）：JWT 签发与 refresh 解析（HS256，与网关验签密钥一致；无 OAuth2 依赖）
 - `peach-common-start`：统一 MVC / MyBatis / `ApiResult` 等
 
 ## 工程坐标
@@ -28,8 +28,7 @@ Peach 体系中的**认证服务**：提供自定义登录 API（如用户名密
 
 见 `src/main/resources/application.yml`：
 
-- `peach.auth.issuer`：JWT `iss`（与网关 `peach.gateway.auth.issuer` 保持一致）
-- `peach.auth.jwt-secret`：HS256 密钥（**至少 32 字节**，生产请用环境变量注入，与网关 `peach.gateway.auth.jwt-secret` 相同）
+- `peach.auth.jwt-secret`：HS256 密钥（**至少 32 字节**，生产请用环境变量注入，与网关 `peach.gateway.jwt.secret` 相同）
 - 数据源：与业务库 `cmn_user` 一致，用于加载用户验密
 
 ## 本地运行

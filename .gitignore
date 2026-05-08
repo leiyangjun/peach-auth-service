@@ -1,4 +1,6 @@
 /target/
+/logs/
+/src/main/resources/rsa_private.pem
 /.classpath
 /.project
 /.settings/

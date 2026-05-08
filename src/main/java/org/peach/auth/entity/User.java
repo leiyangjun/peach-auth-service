@@ -6,67 +6,60 @@ import java.io.Serializable;
 import org.peach.common.mybatis.annotation.ID;
 import org.peach.common.mybatis.annotation.LogicDelete;
 import org.peach.common.mybatis.annotation.TableName;
+import org.peach.common.mybatis.annotation.Unique;
 
+import lombok.Data;
+
+/**
+ * 与表 {@code cmn_user} 映射的登录用户实体（字段以满足认证查询为主，可按需扩展）。
+ * <p>
+ * {@code valid} 与库中 SMALLINT 一致，逻辑删除注解按 starter 约定映射为「有效」条件。
+ * </p>
+ * <p>
+ * 与工程内其它实体一致使用 {@link Data}，避免重复维护访问器。
+ * </p>
+ */
+@Data
 @TableName("cmn_user")
 public class User implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 
+	/** 主键，雪花 ID */
 	@ID
 	private Long id;
+
+	/** 主体类型：INTERNAL / CUSTOMER，与表约束一致 */
 	private String subjectType;
+
+	/** 登录名；INTERNAL 用户由库约束保证非空 */
+	@Unique
 	private String username;
+
+	/** BCrypt 等密码摘要；短信登录用户可为空 */
 	private String password;
+
+	/** 昵称 */
 	private String nickname;
+
+	/** 手机号；短信登录按此字段匹配 {@code cmn_user.mobile} */
+	private String mobile;
+
 	@LogicDelete
 	private String valid;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getSubjectType() {
-		return subjectType;
-	}
-
-	public void setSubjectType(String subjectType) {
-		this.subjectType = subjectType;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getValid() {
-		return valid;
-	}
-
-	public void setValid(String valid) {
-		this.valid = valid;
+	/**
+	 * 与 {@code valid}（SMALLINT）及 MyBatis 映射（可能为 String / Number）兼容，判定账号是否可用。
+	 */
+	public static boolean isValidActive(Object valid) {
+		if (valid == null) {
+			return false;
+		}
+		if (valid instanceof Number) {
+			return ((Number) valid).intValue() == 1;
+		}
+		String s = String.valueOf(valid).trim();
+		return "1".equals(s);
 	}
 }
