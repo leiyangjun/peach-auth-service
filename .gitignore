@@ -1,5 +1,6 @@
 /target/
 /logs/
+/PEACH_LOG_DIR_IS_UNDEFINED/
 /src/main/resources/rsa_private.pem
 /.classpath
 /.project

@@ -34,12 +34,6 @@ peach:
     slider:
       cleanup-interval-ms: 60000
 
-springdoc:
-  cache:
-    disabled: true
-  swagger-ui:
-    path: /swagger-ui/index.html
-
 management:
   endpoints:
     web:
