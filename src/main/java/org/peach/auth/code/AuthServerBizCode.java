@@ -42,7 +42,10 @@ public enum AuthServerBizCode implements ApiResultCustomCode {
 	JWT_HMAC_SECRET_TOO_SHORT(5021, "JWT 秘钥 UTF-8 长度须至少 32 字节"),
 
 	/** 5022：登录 RSA 私钥资源缺失、PEM 解析或密钥构造失败 */
-	LOGIN_RSA_PRIVATE_KEY_INIT_FAILED(5022, "登录 RSA 私钥加载或解析失败");
+	LOGIN_RSA_PRIVATE_KEY_INIT_FAILED(5022, "登录 RSA 私钥加载或解析失败"),
+
+	/** 5023：JWT subject 载荷序列化为 JSON 失败 */
+	JWT_SUBJECT_SERIALIZE_FAILED(5023, "JWT subject 序列化失败");
 
 	private final int code;
 	private final String msg;

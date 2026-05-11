@@ -30,10 +30,10 @@ public class User implements Serializable {
 	@ID
 	private Long id;
 
-	/** 主体类型：INTERNAL / CUSTOMER，与表约束一致 */
-	private String subjectType;
+	/** 用户类型：system / app，与表约束一致 */
+	private String userType;
 
-	/** 登录名；INTERNAL 用户由库约束保证非空 */
+	/** 登录名；system 用户由库约束保证非空 */
 	@Unique
 	private String username;
 
@@ -43,8 +43,26 @@ public class User implements Serializable {
 	/** 昵称 */
 	private String nickname;
 
+	/** 真实姓名 */
+	private String realName;
+
 	/** 手机号；短信登录按此字段匹配 {@code cmn_user.mobile} */
 	private String mobile;
+
+	/** 邮箱 */
+	private String email;
+
+	/** 性别：0 未知，1 男，2 女 */
+	private Short gender;
+
+	/** 头像地址或对象存储键 */
+	private String avatar;
+
+	/** 证件类型编码，可空 */
+	private String certType;
+
+	/** 证件号码，可空 */
+	private String certNo;
 
 	@LogicDelete
 	private String valid;

@@ -11,6 +11,8 @@ import org.peach.auth.utils.JwtUtil;
 import org.peach.auth.code.AuthServerBizCode;
 import org.peach.auth.utils.RSAUtil;
 import org.peach.common.mvc.exception.BizException;
+import org.peach.common.mvc.vo.LoginUserVO;
+import org.peach.common.utils.BeanUtil;
 import org.peach.common.mybatis.service.BaseAbstractService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,6 @@ public class UserServiceImpl extends BaseAbstractService<UserMapper, User, User>
 		if (!BCryptUtil.matches(plainPassword, user.getPassword())) {
 			throw BizException.badRequest(AuthServerBizCode.LOGIN_BAD_CREDENTIALS);
 		}
-		return JwtUtil.signAccessToken(user, this.jwtExpiresInSeconds);
+		return JwtUtil.signAccessToken(BeanUtil.copy(user, LoginUserVO.class), this.jwtExpiresInSeconds);
 	}
 }
