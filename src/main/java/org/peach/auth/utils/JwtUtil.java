@@ -54,14 +54,14 @@ public final class JwtUtil {
 		Objects.requireNonNull(subjectPayload, "subjectPayload");
 		byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
 		if (keyBytes.length < 32) {
-			throw BizException.serverError(AuthServerBizCode.JWT_HMAC_SECRET_TOO_SHORT);
+			throw BizException.error(AuthServerBizCode.JWT_HMAC_SECRET_TOO_SHORT);
 		}
 		String subjectJson;
 		try {
 			subjectJson = OBJECT_MAPPER.writeValueAsString(subjectPayload);
 		}
 		catch (JsonProcessingException e) {
-			throw BizException.serverError(AuthServerBizCode.JWT_SUBJECT_SERIALIZE_FAILED);
+			throw BizException.error(AuthServerBizCode.JWT_SUBJECT_SERIALIZE_FAILED);
 		}
 		SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 		String tokenId = UUID.randomUUID().toString();

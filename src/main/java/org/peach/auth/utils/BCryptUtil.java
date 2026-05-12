@@ -26,7 +26,7 @@ public final class BCryptUtil {
 	 */
 	public static String encode(String plainText) {
 		if (plainText == null) {
-			throw BizException.badRequest(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
+			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
 		}
 		return BCrypt.hashpw(plainText, BCrypt.gensalt(DEFAULT_COST));
 	}
@@ -39,7 +39,7 @@ public final class BCryptUtil {
 	 */
 	public static String encode(String plainText, int cost) {
 		if (plainText == null) {
-			throw BizException.badRequest(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
+			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
 		}
 		return BCrypt.hashpw(plainText, BCrypt.gensalt(cost));
 	}

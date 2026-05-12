@@ -37,17 +37,17 @@ public class UserServiceImpl extends BaseAbstractService<UserMapper, User, User>
 	@Override
 	public TokenDTO loginByPassword(LoginPasswordDTO dto) {
 		if (!this.sliderCaptchaService.verifyAndConsume(dto.getCaptchaId(), dto.getSliderOffset())) {
-			throw BizException.badRequest(AuthServerBizCode.SLIDER_VERIFY_FAILED);
+			throw BizException.validWarn(AuthServerBizCode.SLIDER_VERIFY_FAILED);
 		}
 		// 解密拿到原始明文密码
 		String plainPassword = RSAUtil.decrypt(dto.getPassword());
 
 		User user = this.mapper.selectUniqueValid(dto.getUsername(), User.class);
 		if (user == null) {
-			throw BizException.badRequest(AuthServerBizCode.UN_VALID_USER);
+			throw BizException.validWarn(AuthServerBizCode.UN_VALID_USER);
 		}
 		if (!BCryptUtil.matches(plainPassword, user.getPassword())) {
-			throw BizException.badRequest(AuthServerBizCode.LOGIN_BAD_CREDENTIALS);
+			throw BizException.validWarn(AuthServerBizCode.LOGIN_BAD_CREDENTIALS);
 		}
 		return JwtUtil.signAccessToken(BeanUtil.copy(user, LoginUserVO.class), this.jwtExpiresInSeconds);
 	}

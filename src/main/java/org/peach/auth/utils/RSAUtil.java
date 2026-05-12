@@ -35,7 +35,7 @@ public final class RSAUtil {
 	static {
 		try (InputStream in = RSAUtil.class.getClassLoader().getResourceAsStream(PEM_RESOURCE)) {
 			if (in == null) {
-				throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
+				throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
 			}
 			String pem = new String(in.readAllBytes(), StandardCharsets.UTF_8);
 			PRIVATE_KEY = privateKeyFromPem(pem);
@@ -44,7 +44,7 @@ public final class RSAUtil {
 			PUBLIC_KEY_PEM = toPublicKeyPem(PUBLIC_KEY);
 		}
 		catch (IOException ex) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
 		}
 	}
 
@@ -56,7 +56,7 @@ public final class RSAUtil {
 	 */
 	public static String encrypt(String plainText) {
 		if (plainText == null) {
-			throw BizException.badRequest(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
+			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
 		}
 		try {
 			Cipher cipher = Cipher.getInstance(TRANSFORMATION);
@@ -65,7 +65,7 @@ public final class RSAUtil {
 			return Base64.getEncoder().encodeToString(cipherBytes);
 		}
 		catch (Exception ex) {
-			throw BizException.badRequest(AuthServerBizCode.RSA_ENCRYPT_FAILED);
+			throw BizException.validWarn(AuthServerBizCode.RSA_ENCRYPT_FAILED);
 		}
 	}
 
@@ -74,7 +74,7 @@ public final class RSAUtil {
 	 */
 	public static String decrypt(String base64CipherText) {
 		if (base64CipherText == null || base64CipherText.isBlank()) {
-			throw BizException.badRequest(AuthServerBizCode.RSA_CIPHER_REQUIRED);
+			throw BizException.validWarn(AuthServerBizCode.RSA_CIPHER_REQUIRED);
 		}
 		try {
 			byte[] cipherBytes = Base64.getDecoder().decode(base64CipherText.trim());
@@ -84,10 +84,10 @@ public final class RSAUtil {
 			return new String(plain, StandardCharsets.UTF_8);
 		}
 		catch (IllegalArgumentException ex) {
-			throw BizException.badRequest(AuthServerBizCode.RSA_CIPHER_BASE64_INVALID);
+			throw BizException.validWarn(AuthServerBizCode.RSA_CIPHER_BASE64_INVALID);
 		}
 		catch (Exception ex) {
-			throw BizException.badRequest(AuthServerBizCode.RSA_DECRYPT_FAILED);
+			throw BizException.validWarn(AuthServerBizCode.RSA_DECRYPT_FAILED);
 		}
 	}
 
@@ -105,14 +105,14 @@ public final class RSAUtil {
 
 	private static PublicKey publicKeyFromPrivate(PrivateKey privateKey) {
 		if (!(privateKey instanceof RSAPrivateCrtKey crt)) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
 		}
 		try {
 			var spec = new RSAPublicKeySpec(crt.getModulus(), crt.getPublicExponent());
 			return KeyFactory.getInstance("RSA").generatePublic(spec);
 		}
 		catch (Exception ex) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
 		}
 	}
 
@@ -123,7 +123,7 @@ public final class RSAUtil {
 			return KeyFactory.getInstance("RSA").generatePrivate(spec);
 		}
 		catch (Exception ex) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
 		}
 	}
 
@@ -137,7 +137,7 @@ public final class RSAUtil {
 		String begin = "-----BEGIN " + type + "-----";
 		String end = "-----END " + type + "-----";
 		if (!stripped.contains(begin)) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
 		}
 		stripped = extractBetween(stripped, begin, end);
 		stripped = stripped.replaceAll("\\s+", "");
@@ -145,7 +145,7 @@ public final class RSAUtil {
 			return Base64.getDecoder().decode(stripped);
 		}
 		catch (IllegalArgumentException ex) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED, ex);
 		}
 	}
 
@@ -153,7 +153,7 @@ public final class RSAUtil {
 		int i = text.indexOf(start);
 		int j = text.indexOf(end);
 		if (i < 0 || j < 0 || j <= i) {
-			throw BizException.serverError(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
+			throw BizException.error(AuthServerBizCode.LOGIN_RSA_PRIVATE_KEY_INIT_FAILED);
 		}
 		return text.substring(i + start.length(), j);
 	}
