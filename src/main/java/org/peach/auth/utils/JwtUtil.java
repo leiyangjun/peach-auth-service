@@ -27,7 +27,9 @@ public final class JwtUtil {
 
 	/**
 	 * 固定 HMAC 秘钥：单段 UUID（与网关验签须一致时再统一改为配置或 KMS）。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static final String DEFAULT_HMAC_SECRET = "550e8400-e29b-41d4-a716-446655440000";
 
 	private JwtUtil() {
@@ -38,7 +40,9 @@ public final class JwtUtil {
 	 *
 	 * @param subjectPayload   任意可序列化对象（Jackson）；不可为 null
 	 * @param expiresInSeconds 过期秒数
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static TokenDTO signAccessToken(Object subjectPayload, long expiresInSeconds) {
 		return signAccessToken(subjectPayload, expiresInSeconds, DEFAULT_HMAC_SECRET);
 	}
@@ -49,7 +53,9 @@ public final class JwtUtil {
 	 * @param subjectPayload   任意可序列化对象；不可为 null
 	 * @param expiresInSeconds 过期秒数
 	 * @param secret           HMAC 原始字符串，UTF-8 字节长度须 ≥ 32
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static TokenDTO signAccessToken(Object subjectPayload, long expiresInSeconds, String secret) {
 		Objects.requireNonNull(subjectPayload, "subjectPayload");
 		byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);

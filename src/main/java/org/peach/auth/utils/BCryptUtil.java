@@ -23,7 +23,9 @@ public final class BCryptUtil {
 	 *
 	 * @param plainText 明文口令
 	 * @return BCrypt 哈希字符串（含盐）
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static String encode(String plainText) {
 		if (plainText == null) {
 			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
@@ -36,7 +38,9 @@ public final class BCryptUtil {
 	 *
 	 * @param plainText 明文口令
 	 * @param cost      4～31 之间的对数成本
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static String encode(String plainText, int cost) {
 		if (plainText == null) {
 			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
@@ -50,7 +54,9 @@ public final class BCryptUtil {
 	 * @param plainText   待校验明文
 	 * @param encodedHash 库中或其它来源的 BCrypt 摘要
 	 * @return 是否匹配
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static boolean matches(String plainText, String encodedHash) {
 		if (plainText == null || encodedHash == null) {
 			return false;

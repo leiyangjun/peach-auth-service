@@ -48,7 +48,9 @@ public class SliderCaptchaService {
 
 	/**
 	 * 校验用户提交的偏移是否与后台目标位置在容差内；无论成功与否均移除挑战（失败需重新拉取）。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public boolean verifyAndConsume(String captchaId, int sliderOffset) {
 		clearExpired();
 		SliderCaptchaSession session = sessions.remove(captchaId);
@@ -73,7 +75,9 @@ public class SliderCaptchaService {
 
 	/**
 	 * 滑块挑战返回给前端的结构（原独立 DTO，现内聚在本服务内）。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static class SliderCaptchaChallengeResponse {
 
 		private String captchaId;

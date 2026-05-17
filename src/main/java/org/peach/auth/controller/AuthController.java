@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 认证登录 API（密码须 RSA 密文）。
+ *
+ * @author leiyangjun
  */
 @RestController
 @RequestMapping("/auth/login")

@@ -53,7 +53,9 @@ public final class RSAUtil {
 
 	/**
 	 * 使用内置公钥加密 UTF-8 明文，返回 Base64 密文。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static String encrypt(String plainText) {
 		if (plainText == null) {
 			throw BizException.validWarn(AuthServerBizCode.PLAIN_TEXT_REQUIRED);
@@ -71,7 +73,9 @@ public final class RSAUtil {
 
 	/**
 	 * 使用内置私钥将 Base64 密文解密为 UTF-8 明文。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static String decrypt(String base64CipherText) {
 		if (base64CipherText == null || base64CipherText.isBlank()) {
 			throw BizException.validWarn(AuthServerBizCode.RSA_CIPHER_REQUIRED);
@@ -93,7 +97,9 @@ public final class RSAUtil {
 
 	/**
 	 * 返回供前端加密口令使用的公钥信息。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static RsaPublicKeyDTO getPublicKey() {
 		RsaPublicKeyDTO dto = new RsaPublicKeyDTO();
 		dto.setAlgorithm("RSA");

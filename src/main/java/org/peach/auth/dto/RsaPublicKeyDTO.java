@@ -5,6 +5,8 @@ import lombok.Data;
 
 /**
  * 登录口令 RSA 公钥下发（前端加密口令用）。
+ *
+ * @author leiyangjun
  */
 @Data
 @Schema(description = "RSA 公钥（用于加密口令）")

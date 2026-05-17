@@ -19,7 +19,9 @@ public class LoginPasswordDTO {
 	/**
 	 * RSA PKCS#1 v1.5 加密后的口令，Base64 编码（与 GET /auth/login/password/public-key
 	 * 中公钥对应）。
-	 */
+ *
+ * @author leiyangjun
+ */
 	@NotBlank(message = "口令密文不能为空")
 	@Schema(description = "RSA 加密后的口令（Base64）", requiredMode = Schema.RequiredMode.REQUIRED)
 	private String password;

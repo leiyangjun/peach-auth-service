@@ -8,6 +8,8 @@ import org.peach.common.mvc.result.code.MessageCode;
  * 抛 {@link org.peach.common.mvc.exception.BizException} 时使用 {@link org.peach.common.mvc.exception.BizException#validWarn(MessageCode)}
  * / {@link org.peach.common.mvc.exception.BizException#error(MessageCode)}，勿引用启动器内框架内置枚举作为本服务业务码。
  * </p>
+ *
+ * @author leiyangjun
  */
 public enum AuthServerBizCode implements MessageCode {
 

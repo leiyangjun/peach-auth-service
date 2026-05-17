@@ -5,6 +5,8 @@ import lombok.Data;
 
 /**
  * 登录成功返回的访问令牌（与 JWT {@code jti} 一致的业务侧令牌标识）。
+ *
+ * @author leiyangjun
  */
 @Data
 @Schema(description = "访问令牌")

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * 用户业务实现：滑块 → RSA 解密口令 → BCrypt 比对 → 签发 JWT。
+ *
+ * @author leiyangjun
  */
 @Service
 public class UserServiceImpl extends BaseAbstractService<UserMapper, User, User> implements UserService {

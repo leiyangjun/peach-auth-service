@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 认证服务启动类。
+ *
+ * @author leiyangjun
  */
 @PeachCloud
 @EnableScheduling

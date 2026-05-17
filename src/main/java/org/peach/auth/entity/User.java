@@ -16,8 +16,10 @@ import lombok.Data;
  * {@code valid} 与库中 SMALLINT 一致，逻辑删除注解按 starter 约定映射为「有效」条件。
  * </p>
  * <p>
- * 与工程内其它实体一致使用 {@link Data}，避免重复维护访问器。
+ * 使用 Lombok {@link Data} 生成访问器。
  * </p>
+ *
+ * @author leiyangjun
  */
 @Data
 @TableName("cmn_user")
@@ -69,7 +71,9 @@ public class User implements Serializable {
 
 	/**
 	 * 与 {@code valid}（SMALLINT）及 MyBatis 映射（可能为 String / Number）兼容，判定账号是否可用。
-	 */
+ *
+ * @author leiyangjun
+ */
 	public static boolean isValidActive(Object valid) {
 		if (valid == null) {
 			return false;
