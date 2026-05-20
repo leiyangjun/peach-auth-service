@@ -1,6 +1,6 @@
 package org.peach.auth;
 
-import org.peach.common.mvc.annotation.start.PeachCloud;
+import org.peach.common.mvc.bootstrap.annotation.PeachCloud;
 import org.springframework.boot.SpringApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
