@@ -2,7 +2,7 @@ package org.peach.auth.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.peach.auth.code.AuthServerBizCode;
-import org.peach.common.mvc.exception.BizException;
+import org.peach.common.core.exception.BizException;
 
 /**
  * BCrypt 口令工具：生成摘要（入库）与验密（登录）。
@@ -62,9 +62,5 @@ public final class BCryptUtil {
 			return false;
 		}
 		return BCrypt.checkpw(plainText, encodedHash);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(BCryptUtil.encode("admin"));
 	}
 }

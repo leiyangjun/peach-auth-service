@@ -16,7 +16,7 @@ import javax.crypto.Cipher;
 
 import org.peach.auth.code.AuthServerBizCode;
 import org.peach.auth.dto.RsaPublicKeyDTO;
-import org.peach.common.mvc.exception.BizException;
+import org.peach.common.core.exception.BizException;
 
 /**
  * 登录口令 RSA（PKCS#1 v1.5，与常见前端 JSEncrypt 一致）。私钥来自类路径固定 {@code rsa_private.pem}。
