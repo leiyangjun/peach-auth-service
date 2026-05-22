@@ -1,7 +1,0 @@
-# 开发环境补充配置
-peach:
-  logging:
-    dev:
-      debug-packages:
-        - org.peach
-        - org.peach.auth

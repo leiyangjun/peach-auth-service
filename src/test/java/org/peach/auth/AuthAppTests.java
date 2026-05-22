@@ -3,7 +3,7 @@ package org.peach.auth;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = AuthApp.class)
+@SpringBootTest
 class AuthAppTests {
 
 	@Test

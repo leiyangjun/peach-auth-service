@@ -37,10 +37,9 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- 联调：mvc-start 1.0.0.0 传递 core-start、mybatis-start -->
 		<dependency>
-			<groupId>org.peach.common.mvc</groupId>
-			<artifactId>peach-common-mvc-start</artifactId>
+			<groupId>org.peach.common</groupId>
+			<artifactId>peach-common-start</artifactId>
 			<version>1.0.0.0</version>
 		</dependency>
 		<dependency>

@@ -10,7 +10,7 @@ import javax.crypto.SecretKey;
 
 import org.peach.auth.code.AuthServerBizCode;
 import org.peach.auth.dto.TokenDTO;
-import org.peach.common.core.exception.BizException;
+import org.peach.common.mvc.exception.BizException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
