@@ -18,4 +18,11 @@ public interface UserService extends BaseInterfaceService<User> {
  * @author leiyangjun
  */
 	TokenDTO loginByPassword(LoginPasswordDTO dto);
+
+	/**
+	 * 使用 refresh 令牌续签 access（并 rotation 下发新 refresh）。
+	 *
+	 * @param refreshToken Bearer 后的 JWT refresh 串
+	 */
+	TokenDTO refreshByToken(String refreshToken);
 }

@@ -31,6 +31,10 @@ public class UserServiceImpl extends BaseAbstractService<UserMapper, User, User>
 	@Value("${peach.jwt.expires-in:3600}")
 	private long jwtExpiresInSeconds;
 
+	/** 刷新令牌有效期（秒），默认 7 天；可通过 {@code peach.jwt.refresh-expires-in} 覆盖。 */
+	@Value("${peach.jwt.refresh-expires-in:604800}")
+	private long jwtRefreshExpiresInSeconds;
+
 	public UserServiceImpl(UserMapper userMapper, SliderCaptchaService sliderCaptchaService) {
 		super(userMapper, User.class, User.class);
 		this.sliderCaptchaService = sliderCaptchaService;
@@ -51,6 +55,13 @@ public class UserServiceImpl extends BaseAbstractService<UserMapper, User, User>
 		if (!BCryptUtil.matches(plainPassword, user.getPassword())) {
 			throw BizException.validWarn(AuthServerBizCode.LOGIN_BAD_CREDENTIALS);
 		}
-		return JwtUtil.signAccessToken(BeanUtil.copy(user, LoginUserVO.class), this.jwtExpiresInSeconds);
+		LoginUserVO loginUser = BeanUtil.copy(user, LoginUserVO.class);
+		return JwtUtil.signTokenPair(loginUser, this.jwtExpiresInSeconds, this.jwtRefreshExpiresInSeconds);
+	}
+
+	@Override
+	public TokenDTO refreshByToken(String refreshToken) {
+		LoginUserVO loginUser = JwtUtil.parseRefreshToken(refreshToken);
+		return JwtUtil.signTokenPair(loginUser, this.jwtExpiresInSeconds, this.jwtRefreshExpiresInSeconds);
 	}
 }

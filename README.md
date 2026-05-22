@@ -40,6 +40,8 @@ Peach 体系中的**认证服务**：提供自定义登录 API（如用户名密
 
 - **数据源**：PostgreSQL，连接业务库（用户表等）；可用环境变量 `DB_URL`、`DB_USERNAME`、`DB_PASSWORD` 覆盖。
 - **`peach.jwt.expires-in`**：访问令牌有效期（秒），默认 `3600`；可用环境变量 **`PEACH_JWT_EXPIRES_IN`** 覆盖。
+- **`peach.jwt.refresh-expires-in`**：刷新令牌有效期（秒），默认 `604800`（7 天）；可用 **`PEACH_JWT_REFRESH_EXPIRES_IN`** 覆盖。
+- **`POST /admin/auth/refresh`**：`Authorization: Bearer {refreshToken}`，返回新 access + refresh（rotation）。
 - **Nacos**：`NACOS_SERVER_ADDR`、`NACOS_USERNAME`、`NACOS_PASSWORD`、`NACOS_NAMESPACE`、`NACOS_GROUP` 等与 sibling 服务一致。
 - **`spring.application.module-code`**：当前为 **`AUTH`**（与 `ApiResult` 业务码前缀相关）。
 

@@ -21,6 +21,12 @@ public class TokenDTO {
 	@Schema(description = "JWT access token")
 	private String accessToken;
 
-	@Schema(description = "有效期（秒）")
+	@Schema(description = "访问令牌有效期（秒）")
 	private long expiresIn;
+
+	@Schema(description = "JWT refresh token，仅用于续签访问令牌")
+	private String refreshToken;
+
+	@Schema(description = "刷新令牌有效期（秒）")
+	private long refreshExpiresIn;
 }

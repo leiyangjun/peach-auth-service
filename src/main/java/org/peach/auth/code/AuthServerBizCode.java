@@ -39,6 +39,12 @@ public enum AuthServerBizCode implements MessageCode {
 	/** 口令密文解密失败 */
 	RSA_DECRYPT_FAILED(4107, "口令密文解密失败"),
 
+	/** 刷新令牌无效或签名错误 */
+	REFRESH_TOKEN_INVALID(4108, "刷新令牌无效或已失效"),
+
+	/** 刷新令牌已过期 */
+	REFRESH_TOKEN_EXPIRED(4109, "刷新令牌已过期"),
+
 	// ---------- 服务端配置 / 内部（HTTP 500）----------
 
 	/** JWT HMAC 秘钥长度不满足安全要求 */
